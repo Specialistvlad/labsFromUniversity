@@ -7,7 +7,7 @@ using namespace std;
 #include "pretty-print.hpp"
 
 // Функция создает сбалансированное дерево и возращает корневой узел дерева
-Node* createBalancedTree(Node** node, int *&val, int cnt, int depth)
+Node* createBalancedTree(Node** node, int *&val, int cnt)
 {
 	if (cnt <= 0)
 		return NULL;
@@ -39,14 +39,9 @@ int main()
 		cout << data[i] << " ";
 	cout << endl << endl;
 
-	// Создаем переменную узла и сохраняем в неё корневой узел хаотично заполненного дерева
-	//printPretty(createSampleTree());
-
 	// Exer.1 - Balanced B-Tree
 	Node* node = NULL;
 	int *it = (int *)&data;
-	printf("before it: %p\n", it);
-	printPretty(createBalancedTree(&node, it, ARRSIZE, 0));
-	printf("after it: %p\n", it);
+	printPretty(createBalancedTree(&node, it, ARRSIZE));
 	return 0;
 }
