@@ -5,8 +5,8 @@ using namespace std;
 #include "Binary-tree.hpp"
 #include "pretty-print.hpp"
 
-// Создание листа со значением(первы параметр) в конце дерева начиная от узла(второй параметр)
-Node* createSampleTreeDirect()
+// Функция создает дерево и возращает корневой узел дерева
+Node* createSampleTree()
 {
 	Node *root = new Node(30);
 	root->left = new Node(20);
@@ -27,7 +27,8 @@ Node* createSampleTreeDirect()
 
 int main()
 {
-	Node *root = createSampleTreeDirect();
-	printPretty(root, 1, 0, cout);
+	// Создаем переменную корневого узла и сохраняем в неё узел наполненного дерева
+	Node *root = createSampleTree();
+	printPretty(root);
 	return 0;
 }

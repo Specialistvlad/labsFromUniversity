@@ -11,6 +11,9 @@ using namespace std;
 
 #include "Binary-tree.hpp"
 
+#define LEVEL 1
+#define INDENTSPACE 30
+
 // Find the maximum height of the binary tree
 int maxHeight(Node *p) {
 	if (!p) return 0;
@@ -60,7 +63,7 @@ void printLeaves(int indentSpace, int level, int nodesInThisLevel, const deque<N
 // @ param
 // levelControl how wide you want the tree to sparse (eg, level 1 has the minimum space between nodes, while level 2 has a larger space between nodes)
 // indentSpaceChange this to add some indent space to the left (eg, indentSpace of 0 means the lowest level of the left node will stick to the left margin)
-void printPretty(Node *root, int level, int indentSpace, ostream& out) {
+void _printPretty(Node *root, int level, int indentSpace, ostream& out) {
 	int h = maxHeight(root);
 	int nodesInThisLevel = 1;
 
@@ -92,4 +95,8 @@ void printPretty(Node *root, int level, int indentSpace, ostream& out) {
 	}
 	printBranches(branchLen, nodeSpaceLen, startLen, nodesInThisLevel, nodesQueue, out);
 	printLeaves(indentSpace, level, nodesInThisLevel, nodesQueue, out);
+}
+
+void printPretty(Node *root) {
+	_printPretty(root, LEVEL, INDENTSPACE, cout);
 }
