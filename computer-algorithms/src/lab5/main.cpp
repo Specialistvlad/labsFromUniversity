@@ -18,8 +18,8 @@ Node* createBalancedTree(Node** node, int *&val, int cnt)
 		--cnt;
 	}
 
-	int cntl = cnt / 2;
-	int cntr = cnt - cntl;
+	int cntr = cnt / 2;
+	int cntl = cnt - cntr;
 
 	if (cntl > 0) {
 		createBalancedTree(&(*node)->left, val, cntl);
@@ -33,13 +33,10 @@ Node* createBalancedTree(Node** node, int *&val, int cnt)
 
 int main()
 {
-	#define ARRSIZE 11
-	int data[ARRSIZE] = {25, 50, 10, 5, 30, 55, 0, 40, 35, 15, 45};
-	for (int i = 0; i < ARRSIZE; i++)
-		cout << data[i] << " ";
-	cout << endl << endl;
+	#define ARRSIZE 14
+	int data[ARRSIZE] = {25, 50, 10, 5, 30, 55, 0, 40, 35, 15, 45, 60, 75, 70};
 
-	// Exer.1 - Balanced B-Tree
+	cout << "Exer.1 - Balanced B-Tree" << endl;
 	Node* node = NULL;
 	int *it = (int *)&data;
 	printPretty(createBalancedTree(&node, it, ARRSIZE));
