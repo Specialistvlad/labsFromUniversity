@@ -12,7 +12,7 @@ using namespace std;
 #include "Binary-tree.hpp"
 
 #define LEVEL 1
-#define INDENTSPACE 30
+#define INDENTSPACE 1
 
 // Find the maximum height of the binary tree
 int maxHeight(Node *p) {

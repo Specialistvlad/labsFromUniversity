@@ -1,34 +1,52 @@
 #include <iostream>
 #include <queue>
+#include <stdio.h>
 using namespace std;
 
 #include "Binary-tree.hpp"
 #include "pretty-print.hpp"
 
-// Функция создает дерево и возращает корневой узел дерева
-Node* createSampleTree()
+// Функция создает сбалансированное дерево и возращает корневой узел дерева
+Node* createBalancedTree(Node** node, int *&val, int cnt, int depth)
 {
-	Node *root = new Node(30);
-	root->left = new Node(20);
-	root->right = new Node(40);
+	if (cnt <= 0)
+		return NULL;
 
-	root->left->left = new Node(10);
-	root->left->right = new Node(25);
-	root->right->left = new Node(35);
-	root->right->right = new Node(50);
+	if ((*node) == NULL) {
+		(*node) = new Node(*val);
+		++val;
+		--cnt;
+	}
 
-	root->left->left->left = new Node(5);
-	root->left->left->right = new Node(15);
-	root->left->right->right = new Node(28);
-	root->right->right->left = new Node(41);
+	int cntl = cnt / 2;
+	int cntr = cnt - cntl;
 
-	return root;
+	if (cntl > 0) {
+		createBalancedTree(&(*node)->left, val, cntl);
+	}
+
+	if (cntr > 0) {
+		createBalancedTree(&(*node)->right, val, cntr);
+	}
+	return (*node);
 }
 
 int main()
 {
-	// Создаем переменную корневого узла и сохраняем в неё узел наполненного дерева
-	Node *root = createSampleTree();
-	printPretty(root);
+	#define ARRSIZE 11
+	int data[ARRSIZE] = {25, 50, 10, 5, 30, 55, 0, 40, 35, 15, 45};
+	for (int i = 0; i < ARRSIZE; i++)
+		cout << data[i] << " ";
+	cout << endl << endl;
+
+	// Создаем переменную узла и сохраняем в неё корневой узел хаотично заполненного дерева
+	//printPretty(createSampleTree());
+
+	// Exer.1 - Balanced B-Tree
+	Node* node = NULL;
+	int *it = (int *)&data;
+	printf("before it: %p\n", it);
+	printPretty(createBalancedTree(&node, it, ARRSIZE, 0));
+	printf("after it: %p\n", it);
 	return 0;
 }
