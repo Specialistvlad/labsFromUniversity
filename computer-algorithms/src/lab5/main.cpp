@@ -7,38 +7,71 @@ using namespace std;
 #include "pretty-print.hpp"
 
 // Функция создает сбалансированное дерево и возращает корневой узел дерева
-Node* createBalancedTree(Node** node, int *&val, int cnt)
+Node* createBalancedBTree(Node** node, int *&value, int cnt)
 {
 	if (cnt <= 0)
 		return NULL;
 
+	if (node == NULL) {
+		Node* tmp = NULL;
+		node = &tmp;
+	}
+
 	if ((*node) == NULL) {
-		(*node) = new Node(*val);
-		++val;
+		(*node) = new Node(*value);
+		++value;
 		--cnt;
 	}
 
 	int cntr = cnt / 2;
 	int cntl = cnt - cntr;
 
-	if (cntl > 0) {
-		createBalancedTree(&(*node)->left, val, cntl);
+	if (cntl > 0)
+		createBalancedBTree(&(*node)->left, value, cntl);
+
+	if (cntr > 0)
+		createBalancedBTree(&(*node)->right, value, cntr);
+	return (*node);
+}
+
+// Функция создает бинарное дерево поиска и возращает корневой узел дерева
+Node* insertSearchBTree(Node** node, int value)
+{
+	if ((*node) == NULL) {
+		(*node) = new Node(value);
+		return *node;
 	}
 
-	if (cntr > 0) {
-		createBalancedTree(&(*node)->right, val, cntr);
+	if ((*node)->data > value) {
+		return insertSearchBTree(&(*node)->left, value);
+	} else if ((*node)->data < value) {
+		return insertSearchBTree(&(*node)->right, value);
+	} else {
+		std::cout << "something going wrong! " << value << endl;
 	}
-	return (*node);
+}
+
+// Функция создает бинарное дерево поиска и возращает корневой узел дерева
+Node* createSearchBTree(int *array, int size)
+{
+	Node* node = NULL;
+	for (int i = 0; i < size; ++i)
+		insertSearchBTree(&node, array[i]);
+	return node;
 }
 
 int main()
 {
-	#define ARRSIZE 14
-	int data[ARRSIZE] = {25, 50, 10, 5, 30, 55, 0, 40, 35, 15, 45, 60, 75, 70};
+	int data[] = {25, 50, 55, 0, 10, 5, 30, 40, 35, 15, 45, 60, 75, 70};
+	int size = sizeof(data) / (sizeof(data[0]));
 
 	cout << "Exer.1 - Balanced B-Tree" << endl;
-	Node* node = NULL;
 	int *it = (int *)&data;
-	printPretty(createBalancedTree(&node, it, ARRSIZE));
+	printPretty(createBalancedBTree(NULL, it, size));
+	cout << endl;
+
+	cout << "Exer.2 - Search B-Tree" << endl;
+	printPretty(createSearchBTree(data, size));
+
 	return 0;
 }
