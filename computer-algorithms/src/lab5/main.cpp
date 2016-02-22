@@ -90,7 +90,17 @@ int findRowWithMaxSumm(Node *node, int rowsCount)
 			maxValue = rowsSumm[i];
 		}
 	}
+	delete [] rowsSumm;
 	return maxRow;
+}
+
+void destroyTree(Node *node) {
+	if (node != NULL) {
+		destroyTree(node->left);
+		destroyTree(node->right);
+	}
+	
+	delete node;
 }
 
 int main()
@@ -102,17 +112,21 @@ int main()
 	int *it = (int *)&data;
 	Node* balancedBTreeRoot = createBalancedBTree(NULL, it, size);
 	printPretty(balancedBTreeRoot);
+	destroyTree(balancedBTreeRoot);
 	cout << endl;
 
 	cout << "Exer.2 - Search B-Tree" << endl;
 	Node* searchBTreeRoot = createSearchBTree(data, size);
 	printPretty(searchBTreeRoot);
+	// destroyTree(searchBTreeRoot);
 	cout << endl;
 
 	cout << "Exer.6 - Find row with max summ of values from search B-Tree" << endl;
 	printPretty(searchBTreeRoot);
+	int row = findRowWithMaxSumm(searchBTreeRoot, size);
+	destroyTree(searchBTreeRoot);
 	cout << "Count starts from 0, -1 = no values found" << endl;
-	cout << "Answer is " << findRowWithMaxSumm(searchBTreeRoot, size) << endl;
+	cout << "Answer is " << row << endl;
 	cout << endl;
 
 	return 0;
