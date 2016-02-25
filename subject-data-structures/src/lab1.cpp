@@ -15,6 +15,8 @@ struct Data
 #define SIZE 100
 static double source[SIZE];
 static double results[SIZE];
+static double results2[SIZE];
+static double results4[SIZE];
 static Data d = { 1, 5, -2, -0.1, 0.1, results };
 
 double f(double x) {
@@ -43,6 +45,13 @@ double printVertical(double* f, int size) {
 		}
 		printf("*\n");
 	}
+}
+
+float randomFloat(float a, float b) {
+	float random = ((float) rand()) / (float) RAND_MAX;
+	float diff = b - a;
+	float r = random * diff;
+	return a + r;
 }
 
 int main()
@@ -91,15 +100,34 @@ int main()
 
 	printf("\n\n\nscale from [%.2f, %.2f] to [%d, %.2f]\n",
 		min, max, 0, scaleA);
-	printf("result    source\n");
+	printf("source    result\n");
 	for (int i = 0; i < cnt; ++i)
 	{
-		printf("%.2f     %.2f\n",
-			d.f[i] = scale(d.f[i], min, max, scaleA), d.f[i]);
+		results2[i] = scale(d.f[i], min, max, scaleA);
+		printf("%.2f     %.2f\n", d.f[i], results2[i]);
 	}
 
 	//3333333333333333333333333333333333333333333333333
-	printVertical(d.f, cnt);
+	printVertical(results2, cnt);
 
+	//4444444444444444444444444444444444444444444444444
+	// printVertical(d.f, cnt);
+	double s1 = d.f[1];
+
+	for (int i = 0; i < cnt; ++i)
+		if (i+1 % 2 == 0)
+			if (s1 > d.f[i])
+				s1 = d.f[i];
+
+	double s2 = d.f[0];
+	for (int i = 0; i < cnt; ++i)
+		if (s2 > d.f[i])
+			s2 = d.f[i];
+
+	printf("\n4. S1=%.2f S2=%.2f\n", s1, s2);
+	for (int i = 0; i < cnt; ++i) {
+		results4[i] = randomFloat(s1, s2);
+		printf("random in range %.2f\n", results4[i]);
+	}
 	return 0;
 }
