@@ -36,7 +36,13 @@ double scale(double x, double min, double from, double to) {
 }
 
 double printVertical(double* f, int size) {
-	
+	printf("\n\n\n3.\n");
+	for (int i = 0; i < size; ++i) {
+		for (int j = 0; j < f[i]; ++j) {
+			printf(" ");
+		}
+		printf("*\n");
+	}
 }
 
 int main()
