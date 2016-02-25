@@ -3,5 +3,6 @@ build:
 
 clean:
 	rm lab1
+	rm lab2
 
 .PHONY: build
