@@ -1,6 +1,8 @@
 #include "stdio.h"
 #include <math.h>
 #include <cmath>
+#include <cstdlib>
+#include <ctime>
 
 struct Data
 {
@@ -16,7 +18,6 @@ struct Data
 static double source[SIZE];
 static double results[SIZE];
 static double results2[SIZE];
-static double results4[SIZE];
 static Data d = { 1, 5, -2, -0.1, 0.1, results };
 
 double f(double x) {
@@ -111,7 +112,6 @@ int main()
 	printVertical(results2, cnt);
 
 	//4444444444444444444444444444444444444444444444444
-	// printVertical(d.f, cnt);
 	double s1 = d.f[1];
 
 	for (int i = 0; i < cnt; ++i)
@@ -124,10 +124,11 @@ int main()
 		if (s2 > d.f[i])
 			s2 = d.f[i];
 
+	srand(time(0));
 	printf("\n4. S1=%.2f S2=%.2f\n", s1, s2);
-	for (int i = 0; i < cnt; ++i) {
-		results4[i] = randomFloat(s1, s2);
-		printf("random in range %.2f\n", results4[i]);
+	double step = std::abs(0.5 * 0.03 * (s1 + s2));
+	for (double i = s2; i < s1; i += step) {
+		printf("%.4f\n", i);
 	}
 	return 0;
 }
