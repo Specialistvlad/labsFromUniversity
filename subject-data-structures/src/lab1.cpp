@@ -14,12 +14,15 @@ struct Data
 	double* f;
 };
 
+// размерность максимальная и массивы для результатов
 #define SIZE 100
 static double source[SIZE];
 static double results[SIZE];
 static double results2[SIZE];
+// Инициализируем нашу структуру значениями
 static Data d = { 1, 5, -2, -0.1, 0.1, results };
 
+//функция Ф(от икса) по условиям задачи
 double f(double x) {
 	double result;
 	if (x <= -0.7) {
@@ -30,6 +33,7 @@ double f(double x) {
 	return result;
 }
 
+// функция нормирования, вписывает значения в новый гарфик
 double scale(double x, double min, double from, double to) {
 	min = std::abs(min);
 	from = std::abs(from + min);
@@ -38,21 +42,16 @@ double scale(double x, double min, double from, double to) {
 	return scaleFactor * x;
 }
 
+//выводим вертикальный график
 double printVertical(double* f, int size) {
 	printf("\n\n\n3.\n");
+	//Печатаем столько пробелов сколько в массиве, чтобы получить отступ
 	for (int i = 0; i < size; ++i) {
 		for (int j = 0; j < f[i]; ++j) {
 			printf(" ");
 		}
-		printf("*\n");
+		printf("*\n");//Печатаем знак максимума в конце каждой строки
 	}
-}
-
-float randomFloat(float a, float b) {
-	float random = ((float) rand()) / (float) RAND_MAX;
-	float diff = b - a;
-	float r = random * diff;
-	return a + r;
 }
 
 int main()
@@ -61,13 +60,16 @@ int main()
 	printf("Iteration from %.2f to %.2f with step %.2f\n", d.x1, d.x2, d.dx);
 
 	int cnt = 0;
+	// Определяем в какую сторону итерироваться будем
+	// т.к. значение x1 может быть больше x2 и тогда итерация
+	// должна идти в другую сторону
 	if (d.x1 < d.x2)
 		for (double x = d.x1; x < d.x2+d.dx; x+=d.dx) {
-			source[cnt] = x;
-			if (d.a - x == 0)
+			source[cnt] = x;//сохраняем значения исходные
+			if (d.a - x == 0)//деление на ноль нельзя, по этому проверяем заранее значения исходя из формулы ф(от икс)
 				d.f[cnt] = 0;
 			else
-				d.f[cnt] = f(x);
+				d.f[cnt] = f(x);//считаем ф(от икса)
 			++cnt;
 		}
 	else
