@@ -73,7 +73,7 @@ int main()
 			++cnt;
 		}
 	else
-		for (double x = d.x1; x > d.x2+d.dx; x-=d.dx) {
+		for (double x = d.x1; x > d.x2+d.dx; x-=d.dx) {//тут все аналогично
 			source[cnt] = x;
 			if (d.a - x == 0)
 				d.f[cnt] = 0;
@@ -81,22 +81,24 @@ int main()
 				d.f[cnt] = f(x);
 			++cnt;
 		}
-
+// выводим результат в виде исходного значения и результата
 	printf(" x         f(x)\n");
 	for (int i = 0; i < cnt; ++i)
 	{
 		printf("%.2f     %.2f\n", source[i], d.f[i]);
 	}
 
+//вторая задача
 	//222222222222222222222222222222222222222222222222
-	double min = d.f[0];
+	double min = d.f[0];//выставляем первое значения массива как начальное
 	double max = d.f[0];
-	double scaleA = 70;
+	double scaleA = 70;//константа из задания
 
+//находим минимальное
 	for (int i = 0; i < cnt; ++i)
 		if (min > d.f[i])
 			min = d.f[i];
-
+/находим максимальное
 	for (int i = 0; i < cnt; ++i)
 		if (max < d.f[i])
 			max = d.f[i];
@@ -105,30 +107,31 @@ int main()
 		min, max, 0, scaleA);
 	printf("source    result\n");
 	for (int i = 0; i < cnt; ++i)
-	{
+	{//последовательно скаллируем все значения из одной шкалы в другую с помощью функции
 		results2[i] = scale(d.f[i], min, max, scaleA);
 		printf("%.2f     %.2f\n", d.f[i], results2[i]);
 	}
 
 	//3333333333333333333333333333333333333333333333333
-	printVertical(results2, cnt);
+	printVertical(results2, cnt);// вызываем функцию выводящую вертикальный график
 
 	//4444444444444444444444444444444444444444444444444
 	double s1 = d.f[1];
-
+//ищем минимальное значение среди парных
 	for (int i = 0; i < cnt; ++i)
 		if (i+1 % 2 == 0)
 			if (s1 > d.f[i])
 				s1 = d.f[i];
-
+// ищем минимальное среди всех
 	double s2 = d.f[0];
 	for (int i = 0; i < cnt; ++i)
 		if (s2 > d.f[i])
 			s2 = d.f[i];
 
-	srand(time(0));
 	printf("\n4. S1=%.2f S2=%.2f\n", s1, s2);
+//находим шаг по формуле
 	double step = std::abs(0.5 * 0.03 * (s1 + s2));
+// выводим значения с шагом
 	for (double i = s2; i < s1; i += step) {
 		printf("%.4f\n", i);
 	}
